@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const app = express();
 app.use(express.json());
 const mongoose = require("mongoose");
@@ -15,6 +16,14 @@ app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter);
 app.use("/like", likeRouter);
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "Content-Type, Authorization",
+  })
+);
 
 const connectToDb = async () => {
   const res = await mongoose.connect(process.env.MONGODB_URI);
