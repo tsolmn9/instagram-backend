@@ -17,13 +17,7 @@ app.use("/post", postRouter);
 app.use("/comment", commentRouter);
 app.use("/like", likeRouter);
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type, Authorization",
-  })
-);
+app.use(cors());
 
 const connectToDb = async () => {
   const res = await mongoose.connect(process.env.MONGODB_URI);
