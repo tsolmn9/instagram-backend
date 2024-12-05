@@ -25,7 +25,7 @@ const getPosts = async (req, res) => {
       .find()
       .populate(
         "userId comments likes",
-        "username password email comment userId "
+        "username password email comment userId proImg"
       );
     res.send(Users);
   } catch (error) {
