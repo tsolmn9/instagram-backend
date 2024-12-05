@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const app = express();
 app.use(express.json());
+app.use(cors());
 const mongoose = require("mongoose");
 const PORT = 8080;
 dotenv.config();
@@ -16,8 +17,6 @@ app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter);
 app.use("/like", likeRouter);
-
-app.use(cors());
 
 const connectToDb = async () => {
   const res = await mongoose.connect(process.env.MONGODB_URI);
