@@ -36,18 +36,13 @@ const getOnePost = async (req, res) => {
   try {
     const { id } = req.body;
     const post = await postModel.findOne({ _id: id }).populate([
-      { path: "likes", select: "username proImg" },
       {
         path: "comments",
-        select: "comment userId",
-        populate: {
-          path: "userId",
-          select: "username proImg",
-        },
+        select: "comment userId postId",
       },
     ]);
 
-    res.send(post);
+    res.send(post.comments);
   } catch (error) {
     console.log(error);
   }
