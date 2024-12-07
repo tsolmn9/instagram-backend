@@ -32,7 +32,7 @@ const getPosts = async (req, res) => {
     console.log(error);
   }
 };
-const getOnePost = async (req, res) => {
+const getOnePostComment = async (req, res) => {
   try {
     const { id } = req.body;
     const post = await postModel.findOne({ _id: id }).populate([
@@ -48,4 +48,4 @@ const getOnePost = async (req, res) => {
   }
 };
 
-module.exports = { createPost, getPosts, getOnePost };
+module.exports = { createPost, getPosts, getOnePostComment };
