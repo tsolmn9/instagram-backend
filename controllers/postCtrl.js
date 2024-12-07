@@ -35,9 +35,8 @@ const getPosts = async (req, res) => {
 const getOnePostComment = async (req, res) => {
   try {
     const { postId } = req.query;
-    const post = await postModel.find(postId).populate({
+    const post = await postModel.findOne(postId).populate({
       path: "comments",
-      select: "comment",
       populate: {
         path: "userId",
         select: "username proImg email",
