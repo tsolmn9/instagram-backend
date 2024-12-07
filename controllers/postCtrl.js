@@ -34,21 +34,19 @@ const getPosts = async (req, res) => {
 };
 const getOnePostComment = async (req, res) => {
   try {
-    const { id } = req.body;
-    const post = await postModel.findOne({ _id: id }).populate([
-      {
-        path: "comments",
-        select: "comment",
-        populate: {
-          path: "userId",
-          select: "username proImg email",
-        },
+    const { postId } = req.query;
+    const post = await postModel.find(postId).populate({
+      path: "comments",
+      select: "comment",
+      populate: {
+        path: "userId",
+        select: "username proImg email",
       },
-    ]);
-
+    });
     res.send(post.comments);
   } catch (error) {
     console.log(error);
+    res.send(error);
   }
 };
 
