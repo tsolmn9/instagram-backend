@@ -36,7 +36,7 @@ const getOnePostComment = async (req, res) => {
   try {
     const { postId } = req.params;
     console.log(postId);
-    const post = await postModel.findByIdAndUpdate(postId).populate({
+    const post = await postModel.findById(postId).populate({
       path: "comments",
       populate: {
         path: "userId",
