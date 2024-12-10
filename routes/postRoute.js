@@ -8,6 +8,6 @@ const postRouter = Router();
 
 postRouter.post("/createPost", createPost);
 postRouter.get("/getPosts", getPosts);
-postRouter.get("/postId", getOnePostComment);
+postRouter.get("/:postId", getOnePostComment);
 
 module.exports = postRouter;
