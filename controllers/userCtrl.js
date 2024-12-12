@@ -1,7 +1,6 @@
 const postModel = require("../models/postModel");
 const userModel = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-
 const bcrypt = require("bcrypt");
 
 const signupUser = async (req, res) => {
@@ -16,9 +15,18 @@ const signupUser = async (req, res) => {
       proImg,
     };
     const response = await userModel.create(newUser);
-    const token = jwt.sign({ id: response._id }, process.env.JWT_SECRET, {
-      expiresIn: "3d",
-    });
+    const token = jwt.sign(
+      {
+        userId: response._id,
+        username: response.username,
+        email: response.email,
+        password: response.password,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "3d",
+      }
+    );
     res.status(200).send({ token });
   } catch (error) {
     res.status(404).send("Sign up error");
@@ -36,9 +44,18 @@ const loginUser = async (req, res) => {
     if (!passwordValid) {
       return res.status(404).json("Incorrect email and password combination");
     }
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_REFRESH_EXPIRATION,
-    });
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        username: user.username,
+        email: user.email,
+        password: user.password,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "3d",
+      }
+    );
 
     res.status(200).send({
       id: user.id,
