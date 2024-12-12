@@ -16,15 +16,12 @@ const signupUser = async (req, res) => {
       proImg,
     };
     const response = await userModel.create(newBody);
-    const token = jwt.sign(
-      { email: response.email, id: response._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "3d" }
-    );
-
-    res.status(200).send("Succesful");
+    const token = jwt.sign({ id: response._id }, process.env.JWT_SECRET, {
+      expiresIn: "3d",
+    });
+    res.status(200).send({ token });
   } catch (error) {
-    console.log(error);
+    res.status(404).send(error);
   }
 };
 const loginUser = async (req, res) => {
