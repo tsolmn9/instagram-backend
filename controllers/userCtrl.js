@@ -8,20 +8,20 @@ const signupUser = async (req, res) => {
   try {
     const body = req.body;
     const { username, password, email, proImg } = body;
-    const hashedPassword = bcrypt.hashSync(password, 10);
-    const newBody = {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = {
       username,
       password: hashedPassword,
       email,
       proImg,
     };
-    const response = await userModel.create(newBody);
+    const response = await userModel.create(newUser);
     const token = jwt.sign({ id: response._id }, process.env.JWT_SECRET, {
       expiresIn: "3d",
     });
     res.status(200).send({ token });
   } catch (error) {
-    res.status(404).send(error);
+    res.status(404).send("Log in error");
   }
 };
 const loginUser = async (req, res) => {
