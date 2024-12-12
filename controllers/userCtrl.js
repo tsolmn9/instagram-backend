@@ -25,9 +25,7 @@ const loginUser = async (req, res) => {
   try {
     const body = req.body;
     const { username, password } = body;
-    const user = await userModel.findOne({
-      $where: { username },
-    });
+    const user = await userModel.findOne({ username });
     if (!user) {
       return res.status(404).json("Username not found");
     }
