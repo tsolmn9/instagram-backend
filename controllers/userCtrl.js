@@ -1,5 +1,6 @@
 const postModel = require("../models/postModel");
 const userModel = require("../models/userModel");
+const jwt = require("jsonwebtoken");
 
 const bcrypt = require("bcrypt");
 
@@ -15,12 +16,38 @@ const signupUser = async (req, res) => {
       proImg,
     };
     const response = await userModel.create(newBody);
-    res.send(response);
   } catch (error) {
     console.log(error);
   }
 };
+const loginUser = async (req, res) => {
+  try {
+    const body = req.body;
+    const { username, password } = body;
+    const user = await userModel.findOne({
+      where: { username },
+    });
+    if (!user) {
+      return res.status(404).json("Username not found");
+    }
+    const passwordValid = await bcrypt.compare(password, user.password);
+    if (!passwordValid) {
+      return res.status(404).json("Incorrect email and password combination");
+    }
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_REFRESH_EXPIRATION,
+    });
 
+    res.status(200).send({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      accessToken: token,
+    });
+  } catch (error) {
+    res.status(500).send("Log in error");
+  }
+};
 const getUser = async (req, res) => {
   try {
     const Posts = await userModel.find().populate("posts", "caption postImg");
@@ -96,6 +123,7 @@ const getUserPosts = async (req, res) => {
 
 module.exports = {
   signupUser,
+  loginUser,
   getUser,
   followUsers,
   unFollowUser,
