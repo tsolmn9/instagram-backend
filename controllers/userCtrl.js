@@ -16,6 +16,7 @@ const signupUser = async (req, res) => {
       proImg,
     };
     const response = await userModel.create(newBody);
+    res.send("Registration successful");
   } catch (error) {
     console.log(error);
   }
