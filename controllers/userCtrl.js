@@ -22,7 +22,7 @@ const signupUser = async (req, res) => {
       { expiresIn: "3d" }
     );
 
-    res.status(200).send({ response, token });
+    res.status(200).send("Succesful");
   } catch (error) {
     console.log(error);
   }
