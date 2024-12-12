@@ -21,7 +21,7 @@ const signupUser = async (req, res) => {
     });
     res.status(200).send({ token });
   } catch (error) {
-    res.status(404).send("Log in error");
+    res.status(404).send("Sign up error");
   }
 };
 const loginUser = async (req, res) => {
