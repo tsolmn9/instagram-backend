@@ -27,8 +27,10 @@ const signupUser = async (req, res) => {
       }
     );
     res.status(200).send({ token });
+    console.log("working");
   } catch (error) {
-    res.status(404).send("Sign up error");
+    res.status(404).send(error);
+    console.log("not working");
   }
 };
 const loginUser = async (req, res) => {
