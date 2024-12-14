@@ -17,8 +17,6 @@ const signupUser = async (req, res) => {
     const token = jwt.sign(
       {
         userId: response._id,
-        email: response.email,
-        username: response.username,
       },
       process.env.JWT_SECRET,
       {
@@ -47,9 +45,6 @@ const loginUser = async (req, res) => {
     const token = jwt.sign(
       {
         userId: user._id,
-        username: user.username,
-        email: user.email,
-        password: user.password,
       },
       process.env.JWT_SECRET,
       {
