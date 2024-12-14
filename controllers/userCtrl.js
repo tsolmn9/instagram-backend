@@ -18,6 +18,7 @@ const signupUser = async (req, res) => {
       {
         userId: response._id,
         email: response.email,
+        username: response.username,
       },
       process.env.JWT_SECRET,
       {
