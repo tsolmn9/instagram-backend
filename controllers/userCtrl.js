@@ -17,13 +17,11 @@ const signupUser = async (req, res) => {
     const token = jwt.sign(
       {
         userId: response._id,
-        username: response.username,
         email: response.email,
-        password: response.password,
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "3d",
+        expiresIn: "24h",
       }
     );
     res.status(200).send({ token });
