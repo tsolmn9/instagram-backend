@@ -6,13 +6,12 @@ const bcrypt = require("bcrypt");
 const signupUser = async (req, res) => {
   try {
     const body = req.body;
-    const { username, password, email, proImg } = body;
+    const { username, password, email } = body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = {
       username,
       password: hashedPassword,
       email,
-      proImg,
     };
     const response = await userModel.create(newUser);
     const token = jwt.sign(
