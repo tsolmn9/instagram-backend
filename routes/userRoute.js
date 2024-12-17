@@ -7,11 +7,12 @@ const {
   getUserPosts,
   loginUser,
 } = require("../controllers/userCtrl");
+const authMiddleware = require("../authMiddleware");
 const userRouter = Router();
 
 userRouter.post("/createUser", signupUser);
 userRouter.post("/loginUser", loginUser);
-userRouter.get("/getUser", getUser);
+userRouter.get("/getUser", authMiddleware, getUser);
 userRouter.put("/followUsers", followUsers);
 userRouter.delete("/unFollow", unFollowUser);
 userRouter.post("/getUserPosts", getUserPosts);
