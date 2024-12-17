@@ -5,6 +5,7 @@ const likedPost = async (req, res) => {
   try {
     const body = req.body;
     const { postId, userId } = req.body;
+    console.log(userId);
     const response = await postModel.findByIdAndUpdate(postId, {
       $addToSet: {
         likes: userId,
