@@ -6,11 +6,15 @@ const likedPost = async (req, res) => {
     const userId = req.userId;
     const { postId } = req.body;
     console.log(userId);
-    const response = await postModel.findByIdAndUpdate(postId, {
-      $addToSet: {
-        likes: userId,
+    const response = await postModel.findByIdAndUpdate(
+      postId,
+      {
+        $addToSet: {
+          likes: userId,
+        },
       },
-    });
+      { new: true }
+    );
     res.send(response);
   } catch (error) {
     console.log(error);
@@ -20,11 +24,15 @@ const disLike = async (req, res) => {
   try {
     const userId = req.userId;
     const { postId } = req.body;
-    await postModel.findByIdAndUpdate(postId, {
-      $pull: {
-        likes: userId,
+    await postModel.findByIdAndUpdate(
+      postId,
+      {
+        $pull: {
+          likes: userId,
+        },
       },
-    });
+      { new: true }
+    );
     res.send("dislike success");
   } catch (error) {
     console.log(error);
