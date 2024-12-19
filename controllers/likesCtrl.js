@@ -18,10 +18,11 @@ const likedPost = async (req, res) => {
 };
 const disLike = async (req, res) => {
   try {
-    const { likeId, postId } = req.body;
+    const userId = req.userId;
+    const { postId } = req.body;
     await postModel.findByIdAndUpdate(postId, {
       $pull: {
-        likes: likeId,
+        likes: userId,
       },
     });
     res.send("dislike success");

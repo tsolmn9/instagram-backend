@@ -4,6 +4,6 @@ const authMiddleware = require("../authMiddleware");
 const likeRouter = Router();
 
 likeRouter.post("/likedPost", authMiddleware, likedPost);
-likeRouter.delete("/disLike", disLike);
+likeRouter.delete("/disLike", authMiddleware, disLike);
 
 module.exports = likeRouter;
