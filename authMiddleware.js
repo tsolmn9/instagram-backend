@@ -9,7 +9,6 @@ const authMiddleware = (req, res, next) => {
   console.log(decodedToken);
   if (decodedToken) {
     req.body.userId = decodedToken.userId;
-
     next();
   } else {
     res.send("invalid token");
