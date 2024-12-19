@@ -3,8 +3,8 @@ const postModel = require("../models/postModel");
 
 const likedPost = async (req, res) => {
   try {
-    const body = req.body;
-    const { postId, userId } = req.body;
+    const userId = req.userId;
+    const { postId } = req.body;
     console.log(userId);
     const response = await postModel.findByIdAndUpdate(postId, {
       $addToSet: {

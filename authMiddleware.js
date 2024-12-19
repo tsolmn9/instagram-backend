@@ -8,7 +8,7 @@ const authMiddleware = (req, res, next) => {
   const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
   console.log(decodedToken);
   if (decodedToken) {
-    req.body.userId = decodedToken.userId;
+    req.userId = decodedToken.userId;
     next();
   } else {
     res.send("invalid token");
