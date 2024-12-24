@@ -5,9 +5,10 @@ const {
   editComment,
   deleteComment,
 } = require("../controllers/commentCtrl");
+const authMiddleware = require("../authMiddleware");
 const commentRouter = Router();
 
-commentRouter.post("/createComment", createComment);
+commentRouter.post("/createComment", authMiddleware, createComment);
 commentRouter.get("/getComment", getComment);
 commentRouter.post("/editComment", editComment);
 commentRouter.delete("/deleteComment", deleteComment);

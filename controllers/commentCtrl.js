@@ -4,8 +4,15 @@ const postModel = require("../models/postModel");
 const createComment = async (req, res) => {
   try {
     const body = req.body;
-    const { userId, postId } = body;
-    const response = await commentsModel.create(body);
+    const { postId, comment } = body;
+    const userId = req.userId;
+    console.log(userId);
+    const newComment = {
+      comment,
+      userId,
+      postId,
+    };
+    const response = await commentsModel.create(newComment);
     await postModel.findByIdAndUpdate(postId, {
       $push: {
         comments: response._id,
