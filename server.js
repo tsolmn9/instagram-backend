@@ -13,7 +13,7 @@ const postRouter = require("./routes/postRoute");
 const commentRouter = require("./routes/commentRoute");
 const likeRouter = require("./routes/likesRoute");
 
-app.use("/posts", userRouter);
+app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter);
 app.use("/like", likeRouter);
