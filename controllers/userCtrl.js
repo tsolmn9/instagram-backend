@@ -64,7 +64,10 @@ const loginUser = async (req, res) => {
 };
 const getUser = async (req, res) => {
   try {
-    const Posts = await userModel.find().populate("posts", "caption postImg");
+    const { userId } = req.params;
+    const Posts = await userModel
+      .findById(userId)
+      .populate("posts", "caption postImg");
     res.send(Posts);
   } catch (error) {
     console.log(error);
