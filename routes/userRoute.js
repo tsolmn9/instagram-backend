@@ -3,7 +3,7 @@ const {
   signupUser,
   followUsers,
   unFollowUser,
-  getUserPosts,
+  getOneUserInfo,
   loginUser,
   getOneUser,
 } = require("../controllers/userCtrl");
@@ -12,9 +12,9 @@ const userRouter = Router();
 
 userRouter.post("/createUser", signupUser);
 userRouter.post("/loginUser", loginUser);
-userRouter.get("/:userId", authMiddleware, getOneUser);
+userRouter.get("/getUser", authMiddleware, getOneUser);
 userRouter.put("/followUsers", followUsers);
 userRouter.delete("/unFollow", unFollowUser);
-userRouter.post("/getUserPosts", getUserPosts);
+userRouter.post("/:userId", getOneUserInfo);
 
 module.exports = userRouter;

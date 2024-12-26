@@ -113,28 +113,26 @@ const unFollowUser = async (req, res) => {
   }
 };
 
-const getUserPosts = async (req, res) => {
+const getOneUserInfo = async (req, res) => {
   const { userId } = req.params;
   try {
-    const posts = await userModel.findOne({ _id: userId }).populate([
+    const response = await userModel.findOne({ _id: userId }).populate([
       {
         path: "posts",
         populate: [
-          { path: "likes", select: "username proImg" },
+          { path: "userId", select: "username email profileImg" },
+          { path: "like", select: "username email profileImg" },
           {
             path: "comments",
             select: "comment userId",
-            populate: {
-              path: "userId",
-              select: "username proImg",
-            },
+            populate: { path: "userId", select: "username email profileImg" },
           },
         ],
       },
     ]);
-    res.send(posts);
+    res.send(response);
   } catch (error) {
-    console.log(error);
+    res.json(error);
   }
 };
 
@@ -144,5 +142,5 @@ module.exports = {
   getOneUser,
   followUsers,
   unFollowUser,
-  getUserPosts,
+  getOneUserInfo,
 };
