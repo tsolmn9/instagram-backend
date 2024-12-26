@@ -62,7 +62,7 @@ const loginUser = async (req, res) => {
     res.status(500).send("Log in error");
   }
 };
-const getUser = async (req, res) => {
+const getOneUser = async (req, res) => {
   try {
     const { userId } = req.params;
     const Posts = await userModel
@@ -114,7 +114,7 @@ const unFollowUser = async (req, res) => {
 };
 
 const getUserPosts = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.params;
   try {
     const posts = await userModel.findOne({ _id: userId }).populate([
       {
@@ -141,7 +141,7 @@ const getUserPosts = async (req, res) => {
 module.exports = {
   signupUser,
   loginUser,
-  getUser,
+  getOneUser,
   followUsers,
   unFollowUser,
   getUserPosts,
