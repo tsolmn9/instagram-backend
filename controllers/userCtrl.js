@@ -140,10 +140,10 @@ const getOneUserInfo = async (req, res) => {
     const postData = response.posts.map((post) => ({
       caption: post.caption,
       postImg: post.postImg,
-      userProfileImage: post.userId?.proImg || null,
     }));
 
-    res.json({ posts: postData });
+    res.send(response);
+    res.send({ posts: postData });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json(error);
