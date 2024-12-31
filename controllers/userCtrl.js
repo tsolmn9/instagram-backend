@@ -135,15 +135,7 @@ const getOneUserInfo = async (req, res) => {
     if (!response) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    // Extract captions and profile images
-    const postData = response.posts.map((post) => ({
-      caption: post.caption,
-      postImg: post.postImg,
-    }));
-
     res.send(response);
-    res.send({ posts: postData });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json(error);
