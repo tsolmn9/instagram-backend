@@ -116,6 +116,7 @@ const unFollowUser = async (req, res) => {
 const getOneUserInfo = async (req, res) => {
   const { userId } = req.params;
   console.log(userId);
+
   try {
     const response = await userModel.findOne({ _id: userId }).populate({
       path: "posts",
@@ -130,9 +131,22 @@ const getOneUserInfo = async (req, res) => {
         },
       ],
     });
-    res.send(response);
+
+    if (!response) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Extract captions and profile images
+    const postData = response.posts.map((post) => ({
+      caption: post.caption,
+      postImg: post.postImg,
+      userProfileImage: post.userId?.proImg || null,
+    }));
+
+    res.json({ posts: postData });
   } catch (error) {
-    res.json(error);
+    console.error("Error:", error);
+    res.status(500).json(error);
   }
 };
 
