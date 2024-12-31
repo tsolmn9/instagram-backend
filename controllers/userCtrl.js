@@ -119,6 +119,7 @@ const getOneUserInfo = async (req, res) => {
   try {
     const response = await userModel.findOne({ _id: userId }).populate({
       path: "posts",
+      select: "postImg caption",
       populate: [
         { path: "userId", select: "username email proImg" },
         { path: "likes", select: "username email proImg" },
