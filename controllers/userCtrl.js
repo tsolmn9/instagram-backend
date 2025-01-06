@@ -118,7 +118,7 @@ const getOneUserInfo = async (req, res) => {
   console.log(userId);
 
   try {
-    const response = await userModel.findOne({ _id: idPost }).populate([
+    const response = await userModel.findOne({ _id: userId }).populate([
       {
         path: "posts",
         populate: [
