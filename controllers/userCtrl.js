@@ -118,19 +118,32 @@ const getOneUserInfo = async (req, res) => {
   console.log(userId);
 
   try {
-    const response = await userModel.findOne({ _id: userId }).populate({
-      populate: [
-        { path: "posts", select: "postImg caption" },
-        { path: "userId", select: "username email proImg" },
-        { path: "likes", select: "username email proImg" },
-        {
-          path: "comments",
-          select: "comment userId",
-          populate: { path: "userId", select: "username email proImg" },
+    const response = await userModel.findOne({ _id: idPost }).populate([
+      {
+        path: "posts",
+        populate: [
+          { path: "userId", select: "username email profileImg" },
+          { path: "like", select: "username email profileImg" },
+          {
+            path: "comments",
+            select: "comment userId",
+            populate: { path: "userId", select: "username email profileImg" },
+          },
+        ],
+      },
+      {
+        path: "followers",
+        populate: {
+          path: "_id",
         },
-      ],
-    });
-
+      },
+      {
+        path: "following",
+        populate: {
+          path: "_id",
+        },
+      },
+    ]);
     if (!response) {
       return res.status(404).json({ message: "User not found" });
     }
