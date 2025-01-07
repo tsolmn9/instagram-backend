@@ -122,8 +122,6 @@ const getOneUserInfo = async (req, res) => {
       {
         path: "posts",
         populate: [
-          { path: "userId", select: "username email profileImg" },
-          { path: "like", select: "username email profileImg" },
           {
             path: "comments",
             select: "comment userId",
