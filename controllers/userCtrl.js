@@ -72,19 +72,21 @@ const getOneUser = async (req, res) => {
 const followUsers = async (req, res) => {
   const followingId = req.userId;
   const { followersId } = req.body;
-  if (await userModel.findOne({ followers: followingId }))
-    res.send("already followed");
   try {
     await userModel.findByIdAndUpdate(followersId, {
       $addToSet: {
         followers: followingId,
       },
     });
-    await userModel.findByIdAndUpdate(followingId, {
-      $addToSet: {
-        following: followersId,
+    await userModel.findByIdAndUpdate(
+      followingId,
+      {
+        $addToSet: {
+          following: followersId,
+        },
       },
-    });
+      { new: true }
+    );
     res.send("Done");
   } catch (error) {
     console.log(error);
@@ -101,11 +103,15 @@ const unFollowUser = async (req, res) => {
         followers: followingId,
       },
     });
-    await userModel.findByIdAndUpdate(followingId, {
-      $pull: {
-        following: followersId,
+    await userModel.findByIdAndUpdate(
+      followingId,
+      {
+        $pull: {
+          following: followersId,
+        },
       },
-    });
+      { new: true }
+    );
     res.send(`Deleted `);
   }
 };
