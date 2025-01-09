@@ -70,7 +70,8 @@ const getOneUser = async (req, res) => {
 };
 
 const followUsers = async (req, res) => {
-  const { followersId, followingId } = req.body;
+  const followingId = req.userId;
+  const { followersId } = req.body;
   if (await userModel.findOne({ followers: followingId }))
     res.send("already followed");
   try {
@@ -91,7 +92,8 @@ const followUsers = async (req, res) => {
 };
 
 const unFollowUser = async (req, res) => {
-  const { followersId, followingId } = req.body;
+  const followingId = req.userId;
+  const { followersId } = req.body;
   const checkFollower = await userModel.findOne({ followers: followingId });
   if (checkFollower) {
     await userModel.findByIdAndUpdate(followersId, {
