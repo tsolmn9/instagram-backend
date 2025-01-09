@@ -52,12 +52,7 @@ const loginUser = async (req, res) => {
       }
     );
 
-    res.status(200).send({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      accessToken: token,
-    });
+    res.status(200).send({ token });
   } catch (error) {
     res.status(500).send("Log in error");
   }
