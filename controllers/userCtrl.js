@@ -73,11 +73,15 @@ const followUsers = async (req, res) => {
   const followingId = req.userId;
   const { followersId } = req.body;
   try {
-    await userModel.findByIdAndUpdate(followersId, {
-      $addToSet: {
-        followers: followingId,
+    await userModel.findByIdAndUpdate(
+      followersId,
+      {
+        $addToSet: {
+          followers: followingId,
+        },
       },
-    });
+      { new: true }
+    );
     await userModel.findByIdAndUpdate(
       followingId,
       {
@@ -89,20 +93,24 @@ const followUsers = async (req, res) => {
     );
     res.send("Done");
   } catch (error) {
-    console.log(error);
+    res.send(error);
   }
 };
 
 const unFollowUser = async (req, res) => {
   const followingId = req.userId;
   const { followersId } = req.body;
-  const checkFollower = await userModel.findOne({ followers: followingId });
+  const checkFollower = await userModel.find({ followers: followingId });
   if (checkFollower) {
-    await userModel.findByIdAndUpdate(followersId, {
-      $pull: {
-        followers: followingId,
+    await userModel.findByIdAndUpdate(
+      followersId,
+      {
+        $pull: {
+          followers: followingId,
+        },
       },
-    });
+      { new: true }
+    );
     await userModel.findByIdAndUpdate(
       followingId,
       {
@@ -113,6 +121,8 @@ const unFollowUser = async (req, res) => {
       { new: true }
     );
     res.send(`Deleted `);
+  } else {
+    res.send("User is not following");
   }
 };
 
