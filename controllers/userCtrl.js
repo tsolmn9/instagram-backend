@@ -78,7 +78,7 @@ const followUsers = async (req, res) => {
     const userToBeFollowed = await userModel.findById(followersId);
 
     if (!userToFollow || !userToBeFollowed) {
-      return res.status(404).json({ message: "User(s) not found." });
+      return res.status(404).json({ message: "User is not found." });
     }
 
     if (followingId === followersId) {
@@ -88,7 +88,7 @@ const followUsers = async (req, res) => {
     await userModel.findByIdAndUpdate(
       followersId,
       {
-        $addToSet: { followers: followingId },
+        $push: { followers: followingId },
       },
       { new: true }
     );
@@ -96,7 +96,7 @@ const followUsers = async (req, res) => {
     await userModel.findByIdAndUpdate(
       followingId,
       {
-        $addToSet: { following: followersId },
+        $push: { following: followersId },
       },
       { new: true }
     );

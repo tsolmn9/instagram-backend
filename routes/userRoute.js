@@ -14,7 +14,7 @@ userRouter.post("/createUser", signupUser);
 userRouter.post("/loginUser", loginUser);
 userRouter.get("/getUser", authMiddleware, getOneUser);
 userRouter.post("/followUsers", authMiddleware, followUsers);
-userRouter.delete("/unFollow", unFollowUser);
+userRouter.delete("/unFollow", authMiddleware, unFollowUser);
 userRouter.get("/:userId", authMiddleware, getOneUserInfo);
 
 module.exports = userRouter;
