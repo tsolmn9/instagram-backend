@@ -69,44 +69,31 @@ const getOneUser = async (req, res) => {
   }
 };
 
-const followUsers = async (req, res) => {
-  const followingId = req.userId;
-  const { followersId } = req.body;
-
+const followUser = async (req, res) => {
+  const _id = req.userId;
+  const { userId } = req.body;
   try {
-    const userToFollow = await userModel.findById(followingId);
-    const userToBeFollowed = await userModel.findById(followersId);
-
-    if (!userToFollow || !userToBeFollowed) {
-      return res.status(404).json({ message: "User is not found." });
-    }
-
-    if (followingId === followersId) {
-      return res.status(400).json({ message: "You can't follow yourself." });
-    }
-
     await userModel.findByIdAndUpdate(
-      followersId,
+      userId,
       {
-        $push: { followers: followingId },
+        $addToSet: {
+          followers: _id,
+        },
       },
       { new: true }
     );
-
     await userModel.findByIdAndUpdate(
-      followingId,
+      _id,
       {
-        $push: { following: followersId },
+        $addToSet: {
+          following: userId,
+        },
       },
       { new: true }
     );
-
-    res.status(200).json({ message: "Followed successfully." });
+    res.status(200).send("Updated");
   } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ message: "Something went wrong. Please try again later." });
+    res.status(500).send(error);
   }
 };
 
