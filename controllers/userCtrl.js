@@ -69,7 +69,7 @@ const getOneUser = async (req, res) => {
   }
 };
 
-const followUser = async (req, res) => {
+const followUsers = async (req, res) => {
   const _id = req.userId;
   const { userId } = req.body;
   try {
