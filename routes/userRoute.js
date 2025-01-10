@@ -13,7 +13,7 @@ const userRouter = Router();
 userRouter.post("/createUser", signupUser);
 userRouter.post("/loginUser", loginUser);
 userRouter.get("/getUser", authMiddleware, getOneUser);
-userRouter.post("/followUsers", followUsers);
+userRouter.post("/followUsers", authMiddleware, followUsers);
 userRouter.delete("/unFollow", unFollowUser);
 userRouter.get("/:userId", authMiddleware, getOneUserInfo);
 
