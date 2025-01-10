@@ -165,6 +165,15 @@ const getOneUserInfo = async (req, res) => {
   }
 };
 
+const getAllUser = async (req, res) => {
+  try {
+    const users = await userModel.find();
+    res.send(users);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
 module.exports = {
   signupUser,
   loginUser,
@@ -172,4 +181,5 @@ module.exports = {
   followUsers,
   unFollowUser,
   getOneUserInfo,
+  getAllUser,
 };

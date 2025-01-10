@@ -6,6 +6,7 @@ const {
   getOneUserInfo,
   loginUser,
   getOneUser,
+  getAllUser,
 } = require("../controllers/userCtrl");
 const authMiddleware = require("../authMiddleware");
 const userRouter = Router();
@@ -16,5 +17,6 @@ userRouter.get("/getUser", authMiddleware, getOneUser);
 userRouter.post("/followUsers", authMiddleware, followUsers);
 userRouter.delete("/unFollow", authMiddleware, unFollowUser);
 userRouter.get("/:userId", authMiddleware, getOneUserInfo);
+userRouter.get("/getAllUser", authMiddleware, getAllUser);
 
 module.exports = userRouter;
