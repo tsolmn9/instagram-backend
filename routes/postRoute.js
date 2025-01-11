@@ -7,7 +7,7 @@ const {
 const postRouter = Router();
 const authMiddleware = require("../authMiddleware");
 
-postRouter.post("/createPost", createPost);
+postRouter.post("/createPost", authMiddleware, createPost);
 postRouter.get("/getPosts", authMiddleware, getPosts);
 postRouter.get("/:postId", getOnePostComment);
 
