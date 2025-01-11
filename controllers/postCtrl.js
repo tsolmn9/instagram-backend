@@ -5,7 +5,7 @@ const { path } = require("../routes/likesRoute");
 
 const createPost = async (req, res) => {
   try {
-    const body = req.body;
+    const { caption, postImg } = req.body;
     const userId = req.userId;
     const creatingPost = {
       caption,
