@@ -7,7 +7,12 @@ const createPost = async (req, res) => {
   try {
     const body = req.body;
     const userId = req.userId;
-    const response = await postModel.create(body);
+    const creatingPost = {
+      caption,
+      postImg,
+      userId,
+    };
+    const response = await postModel.create(creatingPost);
 
     await userModel.findByIdAndUpdate(userId, {
       $push: {
