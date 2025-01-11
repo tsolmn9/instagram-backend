@@ -167,10 +167,8 @@ const getOneUserInfo = async (req, res) => {
 
 const getAllUser = async (req, res) => {
   try {
-    const users = await userModel
-      .find()
-      .select("username proImg fullname email followers following");
-    res.status(200).json(users);
+    const users = await userModel.find();
+    res.send(users);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Failed to fetch users", error });

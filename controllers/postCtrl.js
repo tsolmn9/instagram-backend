@@ -6,7 +6,7 @@ const { path } = require("../routes/likesRoute");
 const createPost = async (req, res) => {
   try {
     const body = req.body;
-    const { userId } = body;
+    const userId = req.userId;
     const response = await postModel.create(body);
 
     await userModel.findByIdAndUpdate(userId, {
