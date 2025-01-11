@@ -10,7 +10,7 @@ const createPost = async (req, res) => {
     const creatingPost = {
       caption,
       postImg,
-      userId,
+      userId: userId,
     };
     const response = await postModel.create(creatingPost);
 
