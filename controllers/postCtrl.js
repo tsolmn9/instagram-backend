@@ -49,7 +49,7 @@ const getOnePostComment = async (req, res) => {
         select: "username proImg email",
       },
     });
-    res.send(post.comments);
+    res.send(post);
   } catch (error) {
     console.log(error);
     res.send(error);
