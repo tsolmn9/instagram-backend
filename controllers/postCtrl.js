@@ -55,5 +55,22 @@ const getOnePostComment = async (req, res) => {
     res.send(error);
   }
 };
+const getOnePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const post = await postModel.findById(postId).populate([
+      { path: "userId", select: "username email proImg" },
+      { path: "likes", select: "username email proImg" },
+      {
+        path: "comments",
+        select: "comment userId",
+        populate: { path: "userId", select: "username email profileImg" },
+      },
+    ]);
+    res.send(post);
+  } catch (error) {
+    res.send(error);
+  }
+};
 
-module.exports = { createPost, getPosts, getOnePostComment };
+module.exports = { createPost, getPosts, getOnePostComment, getOnePost };
