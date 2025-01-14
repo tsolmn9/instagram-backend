@@ -58,6 +58,7 @@ const getOnePost = async (req, res) => {
   try {
     const { postId } = req.params;
     const post = await postModel.findById(postId).populate([
+      { select: "caption proImg " },
       { path: "userId", select: "username email proImg" },
       { path: "likes", select: "username email proImg" },
       {
