@@ -128,8 +128,6 @@ const unFollowUser = async (req, res) => {
 
 const getOneUserInfo = async (req, res) => {
   const { userId } = req.params;
-  console.log(userId);
-
   try {
     const response = await userModel.findOne({ _id: userId }).populate([
       {
@@ -166,11 +164,12 @@ const getOneUserInfo = async (req, res) => {
 };
 
 const getAllUser = async (req, res) => {
+  console.log("woeking");
   try {
-    const users = await userModel.find();
+    const users = await userModel.find().populate();
     res.send(users);
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).send({ message: "Failed to fetch users", error });
   }
 };
