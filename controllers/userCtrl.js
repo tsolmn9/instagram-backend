@@ -23,6 +23,21 @@ const signupUser = async (req, res) => {
         expiresIn: "24h",
       }
     );
+    jwt.verify(token, process.env.JWT_SECRET, function (err) {
+      if (err.name === "TokenExpiredError") {
+        console.log("token has expired");
+        const newToken = jwt.sign(
+          {
+            userId: user._id,
+          },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "24h",
+          }
+        );
+        return res.send({ token: newToken });
+      }
+    });
     res.status(200).send({ token });
     console.log("working");
   } catch (error) {
@@ -48,10 +63,24 @@ const loginUser = async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "3d",
+        expiresIn: "24h",
       }
     );
-
+    jwt.verify(token, process.env.JWT_SECRET, function (err) {
+      if (err.name === "TokenExpiredError") {
+        console.log("token has expired");
+        const newToken = jwt.sign(
+          {
+            userId: user._id,
+          },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "24h",
+          }
+        );
+        return res.send({ token: newToken });
+      }
+    });
     res.send({ token });
   } catch (error) {
     res.status(500).send("Log in error");
