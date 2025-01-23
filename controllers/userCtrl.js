@@ -66,19 +66,26 @@ const loginUser = async (req, res) => {
         expiresIn: "24h",
       }
     );
-    jwt.verify(token, process.env.JWT_SECRET, function (err) {
-      if (err.name === "TokenExpiredError") {
-        console.log("token has expired");
-        const newToken = jwt.sign(
-          {
-            userId: user._id,
-          },
-          process.env.JWT_SECRET,
-          {
-            expiresIn: "24h",
-          }
-        );
-        return res.send({ token: newToken });
+    jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
+      if (err) {
+        if (err.name === "TokenExpiredError") {
+          console.log("Token has expired");
+
+          const newToken = jwt.sign(
+            {
+              userId: user._id,
+            },
+            process.env.JWT_SECRET,
+            {
+              expiresIn: "24h",
+            }
+          );
+
+          return res.send({ token: newToken });
+        } else {
+          console.error("Token verification failed:", err);
+          return res.status(401).send({ error: "Invalid token" });
+        }
       }
     });
     res.send({ token });
