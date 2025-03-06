@@ -2,11 +2,17 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const app = express();
-app.use(express.json());
-app.use(cors());
 const mongoose = require("mongoose");
 const PORT = 8080;
 dotenv.config();
+app.use(express.json());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "Content-Type, Authorization",
+  })
+);
 
 const userRouter = require("./routes/userRoute");
 const postRouter = require("./routes/postRoute");

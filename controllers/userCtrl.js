@@ -163,7 +163,7 @@ const getOneUserInfo = async (req, res) => {
 };
 
 const getAllUser = async (req, res) => {
-  console.log("woeking");
+  console.log("working");
   try {
     const users = await userModel.find().populate();
     res.send(users);
